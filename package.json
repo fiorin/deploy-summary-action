@@ -12,7 +12,8 @@
     "prettier": "prettier --write .",
     "prepare": "husky install",
     "build:show-zephyr-cache": "npx esbuild tests/show-zephyr-cache.ts --target=es2021 --platform=node --bundle --outfile=tests/show-zephyr-cache.js",
-    "show:show-zephyr-cache": "node tests/show-zephyr-cache.js"
+    "show:show-zephyr-cache": "node tests/show-zephyr-cache.js",
+    "preinstall": "npx only-allow pnpm"
   },
   "keywords": [],
   "author": "",
