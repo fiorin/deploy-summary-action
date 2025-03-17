@@ -33,6 +33,7 @@ jobs:
           ZE_API_GATE: ${{ vars.ZE_API_GATE }}
         run: |
           cd zephyr-examples/create-mf-app-rspack
+          pnpm i
           pnpm run build
       - name: Zephyr deploy summary
         uses: ./ # Uses an action in the root directory
