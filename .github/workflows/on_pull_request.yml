@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch to run workflow on'
+        description: "Branch to run workflow on"
         required: true
-        default: 'main'
+        default: "main"
 
 jobs:
   build_app:
@@ -16,8 +16,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: NPM install
-        run: npm ci
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.1
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+      - name: PNPM install
+        run: pnpm i
       - name: Build App
         env:
           ZE_SECRET_TOKEN: ${{ secrets.ZE_SECRET_TOKEN }}
@@ -25,8 +33,7 @@ jobs:
           ZE_API_GATE: ${{ vars.ZE_API_GATE }}
         run: |
           cd zephyr-examples/create-mf-app-rspack
-          npm ci
-          npm run build
+          pnpm run build
       - name: Zephyr deploy summary
         uses: ./ # Uses an action in the root directory
         id: zephyr-summary
@@ -35,4 +42,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print zephyr deploy summary
         run: echo "Deployed to ${{ steps.zephyr-summary.outputs.version_url }}"
-
