@@ -30,7 +30,7 @@ jobs:
         run: |
           cd zephyr-examples/create-mf-app-rspack
           pnpm i
-          DEBUG=* pnpm run build
+          pnpm run build
       - name: Zephyr deploy summary
         uses: ./ # Uses an action in the root directory
         id: zephyr-summary
